@@ -9,6 +9,8 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import type { ReactNode } from "react"
 
+import appCss from "../styles/app.css?url"
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -20,9 +22,10 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1"
       },
       {
-        title: "TanStack Start Starter"
+        title: "Better Auth InstantDB Starter"
       }
-    ]
+    ],
+    links: [{ rel: "stylesheet", href: appCss }]
   }),
   component: RootComponent
 })
