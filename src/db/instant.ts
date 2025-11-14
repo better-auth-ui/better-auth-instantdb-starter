@@ -3,5 +3,8 @@ import schema from "../instant.schema"
 
 export const db = init({
   appId: import.meta.env.VITE_INSTANT_APP_ID as string,
-  schema
+  schema,
+  devtool: {
+    position: "bottom-left"
+  }
 })
