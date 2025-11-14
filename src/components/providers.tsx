@@ -4,7 +4,7 @@ import { InstantAuth } from "better-auth-instantdb/react"
 import { ThemeProvider } from "next-themes"
 import { Toaster } from "sonner"
 
-import { db } from "@/db/instant"
+import { db } from "@/database/db"
 import { authHooks } from "@/hooks/auth-hooks"
 import { authClient } from "@/lib/auth-client"
 

@@ -1,5 +1,5 @@
 import type { User } from "better-auth"
-import { db } from "@/db/instant"
+import { db } from "@/database/db"
 import { authClient } from "@/lib/auth-client"
 
 export const authHooks = {

@@ -8,8 +8,8 @@ import {
   TooltipContent,
   TooltipTrigger
 } from "@/components/ui/tooltip"
-import type { Todo, User } from "@/db/entity.types"
-import { db } from "@/db/instant"
+import { db } from "@/database/db"
+import type { Todo, User } from "@/database/entity.types"
 
 export function TodoItem({ todo }: { todo: Todo & { user?: User } }) {
   return (

@@ -7,8 +7,9 @@ import { TodoItem } from "@/components/todos/todo-item"
 import { TodoSkeleton } from "@/components/todos/todo-skeleton"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { db } from "@/db/instant"
+import { db } from "@/database/db"
 import { handleAction } from "@/lib/form-helpers"
+import { useEntities } from "@/lib/instant"
 
 export const Route = createFileRoute("/todos")({
   component: TodosPage
@@ -19,17 +20,13 @@ function TodosPage() {
   const { user } = db.useAuth()
   const [q, setQ] = useState("")
 
-  const { data, isLoading } = db.useQuery({
-    todos: {
-      $: {
-        where: { userId: user?.id, task: { $ilike: `%${q}%` } },
-        order: { serverCreatedAt: "desc" }
-      },
-      user: {}
-    }
+  const { data: todos, isLoading } = useEntities(db, "todos", {
+    $: {
+      where: { userId: user?.id, task: { $ilike: `%${q}%` } },
+      order: { serverCreatedAt: "desc" }
+    },
+    user: {}
   })
-
-  const { todos } = data ?? {}
 
   const insertTodo = ({ task }: { task: string }) => {
     if (!user) return

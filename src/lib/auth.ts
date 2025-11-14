@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth"
 import { instantAdapter } from "better-auth-instantdb"
 import { v7 } from "uuid"
-import { adminDb } from "@/db/admin"
+import { adminDb } from "@/database/admin-db"
 
 export const auth = betterAuth({
   database: instantAdapter({ db: adminDb }),
