@@ -1,17 +1,14 @@
 // Docs: https://www.instantdb.com/docs/modeling-data
 
 import { i } from "@instantdb/react"
+import { authSchema } from "../auth.schema"
 
 const _schema = i.schema({
   entities: {
+    ...authSchema.entities,
     $files: i.entity({
       path: i.string().unique().indexed(),
       url: i.string()
-    }),
-    $users: i.entity({
-      email: i.string().unique().indexed().optional(),
-      imageURL: i.string().optional(),
-      type: i.string().optional()
     })
   },
   links: {

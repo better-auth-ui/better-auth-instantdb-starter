@@ -36,7 +36,7 @@
     "@tanstack/react-router-devtools": "^1.136.0",
     "@tanstack/react-start": "^1.136.0",
     "better-auth": "^1.3.34",
-    "better-auth-instantdb": "^1.9.0",
+    "better-auth-instantdb": "link:../better-auth-instantdb",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.553.0",
@@ -45,11 +45,7 @@
     "react-dom": "^19.2.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",
-    "tailwindcss-safe-area": "^1.1.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "better-auth-instantdb": "file:../better-auth-instantdb"
-    }
+    "tailwindcss-safe-area": "^1.1.0",
+    "uuid": "^13.0.0"
   }
 }

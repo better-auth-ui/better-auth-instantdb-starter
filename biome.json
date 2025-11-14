@@ -16,7 +16,13 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": {
+          "level": "info",
+          "fix": "safe"
+        }
+      }
     },
     "domains": {
       "react": "recommended"
