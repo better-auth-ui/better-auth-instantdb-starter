@@ -18,14 +18,14 @@ export function useEntities<
     RoomsDef
   >,
   TConfig extends InstantConfig<TSchema, boolean>,
-  TTable extends keyof TSchema["entities"] & string,
+  TNamespace extends keyof TSchema["entities"] & string,
   TParams extends
-    InstaQLParams<TSchema>[TTable] = InstaQLParams<TSchema>[TTable]
+    InstaQLParams<TSchema>[TNamespace] = InstaQLParams<TSchema>[TNamespace]
 >(
   database: InstantReactWebDatabase<TSchema, TConfig>,
-  table?: TTable | false | null | 0 | "",
-  query: { [K in TTable]: TParams } extends ValidQuery<
-    { [K in TTable]: TParams },
+  table?: TNamespace | false | null | 0 | "",
+  query: { [K in TNamespace]: TParams } extends ValidQuery<
+    { [K in TNamespace]: TParams },
     TSchema
   >
     ? TParams
@@ -33,14 +33,14 @@ export function useEntities<
 ) {
   const result = database.useQuery(table ? ({ [table]: query } as any) : null)
 
-  type QueryForResult = { [K in TTable]: TParams } & InstaQLParams<TSchema>
+  type QueryForResult = { [K in TNamespace]: TParams } & InstaQLParams<TSchema>
   type FullQueryResult = InstaQLResult<
     TSchema,
     QueryForResult,
     NonNullable<TConfig["useDateObjects"]>
   >
 
-  type TEntity = FullQueryResult[TTable] extends (infer U)[] ? U : never
+  type TEntity = FullQueryResult[TNamespace] extends (infer U)[] ? U : never
 
   return {
     ...result,

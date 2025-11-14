@@ -51,11 +51,10 @@ function TodosPage() {
           name="task"
           placeholder="Add a todo"
           autoComplete="off"
-          disabled={!user}
           required
         />
 
-        <Button disabled={!user}>
+        <Button>
           <PlusIcon />
           Add
         </Button>
@@ -66,7 +65,6 @@ function TodosPage() {
         name="task"
         placeholder="Search todos"
         autoComplete="off"
-        disabled={!user}
         value={q}
         onChange={(e) => setQ(e.target.value)}
       />
