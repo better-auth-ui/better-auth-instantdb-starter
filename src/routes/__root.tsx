@@ -8,9 +8,8 @@ import {
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import type { ReactNode } from "react"
-
+import { Header } from "@/components/header"
 import { Providers } from "@/components/providers"
-
 import appCss from "../styles/app.css?url"
 
 export const Route = createRootRoute({
@@ -47,8 +46,11 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
 
-      <body>
-        <Providers>{children}</Providers>
+      <body className="min-h-screen flex flex-col">
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
 
         <Scripts />
 
