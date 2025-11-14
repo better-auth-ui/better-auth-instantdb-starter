@@ -9,6 +9,13 @@ const _schema = i.schema({
     $files: i.entity({
       path: i.string().unique().indexed(),
       url: i.string()
+    }),
+    todos: i.entity({
+      task: i.string().indexed(),
+      isComplete: i.boolean(),
+      userId: i.string(),
+      createdAt: i.date(),
+      updatedAt: i.date()
     })
   },
   links: {
@@ -23,6 +30,19 @@ const _schema = i.schema({
         on: "$users",
         has: "many",
         label: "linkedGuestUsers"
+      }
+    },
+    todosUser: {
+      forward: {
+        on: "todos",
+        has: "one",
+        label: "user",
+        onDelete: "cascade"
+      },
+      reverse: {
+        on: "$users",
+        has: "many",
+        label: "todos"
       }
     }
   },
