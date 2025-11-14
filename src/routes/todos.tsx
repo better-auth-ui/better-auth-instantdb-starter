@@ -7,7 +7,6 @@ import { TodoItem } from "@/components/todos/todo-item"
 import { TodoSkeleton } from "@/components/todos/todo-skeleton"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import type { Todo } from "@/db/entity.types"
 import { db } from "@/db/instant"
 import { handleAction } from "@/lib/form-helpers"
 
@@ -32,13 +31,13 @@ function TodosPage() {
 
   const { todos } = data ?? {}
 
-  const insertTodo = (todo: Todo) => {
+  const insertTodo = ({ task }: { task: string }) => {
     if (!user) return
 
     db.transact(
       db.tx.todos[v7()]
         .create({
-          task: todo.task,
+          task: task,
           userId: user.id,
           isComplete: false,
           createdAt: new Date(),
@@ -51,8 +50,6 @@ function TodosPage() {
   return (
     <main className="container mx-auto flex flex-col gap-4 p-safe-or-4 md:p-safe-or-6">
       <form action={handleAction(insertTodo)} className="flex gap-3">
-        <Input type="hidden" name="userId" defaultValue={user?.id} />
-
         <Input
           type="text"
           name="task"

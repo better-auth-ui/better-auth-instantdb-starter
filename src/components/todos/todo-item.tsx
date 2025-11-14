@@ -25,11 +25,11 @@ export function TodoItem({ todo }: { todo: Todo & { user?: User } }) {
         }
       />
 
-      {todo.task}
+      <span className="me-auto">{todo.task}</span>
 
       {todo.user && (
         <Tooltip>
-          <TooltipTrigger className="ms-auto cursor-default">
+          <TooltipTrigger className="cursor-default">
             <UserAvatar user={todo.user} size="sm" className="text-xs" />
           </TooltipTrigger>
 
