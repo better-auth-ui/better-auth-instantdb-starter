@@ -1,18 +1,18 @@
 // Docs: https://www.instantdb.com/docs/modeling-data
 
-import { i } from "@instantdb/react";
+import { i } from "@instantdb/react"
 
 const _schema = i.schema({
   entities: {
     $files: i.entity({
       path: i.string().unique().indexed(),
-      url: i.string(),
+      url: i.string()
     }),
     $users: i.entity({
       email: i.string().unique().indexed().optional(),
       imageURL: i.string().optional(),
-      type: i.string().optional(),
-    }),
+      type: i.string().optional()
+    })
   },
   links: {
     $usersLinkedPrimaryUser: {
@@ -20,22 +20,22 @@ const _schema = i.schema({
         on: "$users",
         has: "one",
         label: "linkedPrimaryUser",
-        onDelete: "cascade",
+        onDelete: "cascade"
       },
       reverse: {
         on: "$users",
         has: "many",
-        label: "linkedGuestUsers",
-      },
-    },
+        label: "linkedGuestUsers"
+      }
+    }
   },
-  rooms: {},
-});
+  rooms: {}
+})
 
 // This helps Typescript display nicer intellisense
-type _AppSchema = typeof _schema;
+type _AppSchema = typeof _schema
 interface AppSchema extends _AppSchema {}
-const schema: AppSchema = _schema;
+const schema: AppSchema = _schema
 
-export type { AppSchema };
-export default schema;
+export type { AppSchema }
+export default schema
