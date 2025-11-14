@@ -16,11 +16,10 @@ export const Route = createFileRoute("/todos")({
 })
 
 function TodosPage() {
-  useAuthenticate()
-  const { user } = db.useAuth()
+  const { user } = useAuthenticate()
   const [q, setQ] = useState("")
 
-  const { data: todos, isLoading } = useEntities(db, "todos", {
+  const { data: todos, isLoading } = useEntities(db, user && "todos", {
     $: {
       where: { userId: user?.id, task: { $ilike: `%${q}%` } },
       order: { serverCreatedAt: "desc" }
