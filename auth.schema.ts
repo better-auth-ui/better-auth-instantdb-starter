@@ -5,10 +5,8 @@ import { i } from "@instantdb/react"
 export const authSchema = i.schema({
   entities: {
     $users: i.entity({
-      email: i.string().unique().indexed().optional(),
-      imageURL: i.string().optional(),
-      type: i.string().optional(),
       name: i.string().indexed().optional(),
+      email: i.string().unique().indexed(),
       emailVerified: i.boolean().optional(),
       image: i.string().optional(),
       createdAt: i.date().optional(),
@@ -133,7 +131,7 @@ export const authSchema = i.schema({
         label: "invitations"
       }
     },
-    invitationsUser: {
+    invitationsInviter: {
       forward: {
         on: "invitations",
         has: "one",
