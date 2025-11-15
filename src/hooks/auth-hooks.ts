@@ -6,33 +6,37 @@ import { authClient } from "@/lib/auth-client"
 
 export const authHooks = {
   useSession: () => {
-    const { data: sessionData, ...rest } = authClient.useSession()
-    const { user, error } = db.useAuth()
+    const {
+      data: sessionData,
+      isPending,
+      error,
+      isRefetching,
+      ...rest
+    } = authClient.useSession()
+
+    const { user: authUser, error: authError, isLoading } = db.useAuth()
 
     const { data } = db.useQuery(
-      user && user.id === sessionData?.user?.id
+      authUser
         ? {
-            $users: { $: { where: { id: user.id } } }
+            $users: { $: { where: { id: authUser.id } } }
           }
         : null
     )
 
-    if (sessionData && data?.$users?.length) {
-      sessionData.user = data.$users[0] as User
-    }
+    if (data?.$users?.length) {
+      const user = data.$users[0] as User
 
-    if (sessionData && sessionData.user?.id !== user?.id) {
-      return {
-        ...rest,
-        data: null,
-        isPending: !error,
-        isRefetching: !error,
-        error: (error as BetterFetchError) || null
+      if (sessionData?.user?.id === user.id) {
+        sessionData.user = user
       }
     }
 
     return {
-      data: sessionData,
+      data: !authError ? sessionData : null,
+      isPending: isLoading || isPending,
+      isRefetching: isLoading || isRefetching,
+      error: ((authError || error) as BetterFetchError) || null,
       ...rest
     }
   }

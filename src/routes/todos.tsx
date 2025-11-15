@@ -23,7 +23,7 @@ function TodosPage() {
       ? {
           todos: {
             $: {
-              where: { userId: user?.id, task: { $ilike: `%${q}%` } },
+              where: { userId: user.id, task: { $ilike: `%${q}%` } },
               order: { serverCreatedAt: "desc" }
             },
             user: {}
