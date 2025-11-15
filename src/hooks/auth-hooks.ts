@@ -4,5 +4,5 @@ import { db } from "@/database/db"
 import { authClient } from "@/lib/auth-client"
 
 export const authHooks = {
-  useSession: () => useInstantSession(db, authClient)
+  useSession: () => useInstantSession({ db, authClient, persistent: true })
 } satisfies Partial<AuthHooks>

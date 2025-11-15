@@ -26,7 +26,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         Link={({ href, ...props }) => <Link to={href} {...props} />}
         multiSession
       >
-        <InstantAuth db={db} authClient={authClient} />
+        <InstantAuth db={db} authClient={authClient} persistent />
 
         {children}
 
