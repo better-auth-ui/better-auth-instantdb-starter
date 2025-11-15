@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TodosRouteImport } from './routes/todos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OrganizationPathRouteImport } from './routes/organization/$path'
 import { Route as AuthPathRouteImport } from './routes/auth/$path'
 import { Route as AccountPathRouteImport } from './routes/account/$path'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
@@ -23,6 +24,11 @@ const TodosRoute = TodosRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizationPathRoute = OrganizationPathRouteImport.update({
+  id: '/organization/$path',
+  path: '/organization/$path',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthPathRoute = AuthPathRouteImport.update({
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/todos': typeof TodosRoute
   '/account/$path': typeof AccountPathRoute
   '/auth/$path': typeof AuthPathRoute
+  '/organization/$path': typeof OrganizationPathRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/todos': typeof TodosRoute
   '/account/$path': typeof AccountPathRoute
   '/auth/$path': typeof AuthPathRoute
+  '/organization/$path': typeof OrganizationPathRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
@@ -61,19 +69,33 @@ export interface FileRoutesById {
   '/todos': typeof TodosRoute
   '/account/$path': typeof AccountPathRoute
   '/auth/$path': typeof AuthPathRoute
+  '/organization/$path': typeof OrganizationPathRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/todos' | '/account/$path' | '/auth/$path' | '/api/auth/$'
+  fullPaths:
+    | '/'
+    | '/todos'
+    | '/account/$path'
+    | '/auth/$path'
+    | '/organization/$path'
+    | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/todos' | '/account/$path' | '/auth/$path' | '/api/auth/$'
+  to:
+    | '/'
+    | '/todos'
+    | '/account/$path'
+    | '/auth/$path'
+    | '/organization/$path'
+    | '/api/auth/$'
   id:
     | '__root__'
     | '/'
     | '/todos'
     | '/account/$path'
     | '/auth/$path'
+    | '/organization/$path'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
@@ -82,6 +104,7 @@ export interface RootRouteChildren {
   TodosRoute: typeof TodosRoute
   AccountPathRoute: typeof AccountPathRoute
   AuthPathRoute: typeof AuthPathRoute
+  OrganizationPathRoute: typeof OrganizationPathRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -99,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organization/$path': {
+      id: '/organization/$path'
+      path: '/organization/$path'
+      fullPath: '/organization/$path'
+      preLoaderRoute: typeof OrganizationPathRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/$path': {
@@ -130,6 +160,7 @@ const rootRouteChildren: RootRouteChildren = {
   TodosRoute: TodosRoute,
   AccountPathRoute: AccountPathRoute,
   AuthPathRoute: AuthPathRoute,
+  OrganizationPathRoute: OrganizationPathRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

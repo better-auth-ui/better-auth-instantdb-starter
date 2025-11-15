@@ -10,7 +10,7 @@ const rules = {
   },
   $default: {
     allow: {
-      $default: "false"
+      $default: "true"
     }
   },
   $users: {
@@ -24,16 +24,21 @@ const rules = {
   },
   todos: {
     allow: {
-      view: "auth.id != null",
-      create: "isOwner",
-      update: "isOwner && isStillOwner",
-      delete: "isOwner"
+      view: "isOwner || isOrganizationOwner",
+      create: "isOwner || isOrganizationOwner",
+      update:
+        "(isOwner || isOrganizationOwner) && (isStillOwner || isStillOrganizationOwner)",
+      delete: "isOwner || isOrganizationOwner"
     },
     bind: [
       "isOwner",
-      "auth.id != null && auth.id == data.userId",
+      "auth.id == data.userId && data.organizationId == null",
       "isStillOwner",
-      "auth.id != null && auth.id == data.userId"
+      "auth.id == newData.userId && newData.organizationId == null",
+      "isOrganizationOwner",
+      "data.organizationId in auth.ref('$user.members.organizationId')",
+      "isStillOrganizationOwner",
+      "newData.organizationId in auth.ref('$user.members.organizationId')"
     ]
   }
 } satisfies InstantRules

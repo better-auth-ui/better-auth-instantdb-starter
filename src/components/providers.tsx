@@ -18,6 +18,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
+      <InstantAuth db={db} authClient={authClient} persistent />
+
       <AuthUIProvider
         authClient={authClient}
         hooks={authHooks}
@@ -25,9 +27,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
         replace={(href) => navigate({ href, replace: true })}
         Link={({ href, ...props }) => <Link to={href} {...props} />}
         multiSession
+        organization
       >
-        <InstantAuth db={db} authClient={authClient} persistent />
-
         {children}
 
         <Toaster />

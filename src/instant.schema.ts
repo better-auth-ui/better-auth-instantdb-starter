@@ -14,6 +14,7 @@ const _schema = i.schema({
       task: i.string().indexed(),
       isComplete: i.boolean(),
       userId: i.string(),
+      organizationId: i.string().optional(),
       createdAt: i.date(),
       updatedAt: i.date()
     })
@@ -42,6 +43,19 @@ const _schema = i.schema({
       },
       reverse: {
         on: "$users",
+        has: "many",
+        label: "todos"
+      }
+    },
+    todosOrganization: {
+      forward: {
+        on: "todos",
+        has: "one",
+        label: "organization",
+        onDelete: "cascade"
+      },
+      reverse: {
+        on: "organizations",
         has: "many",
         label: "todos"
       }

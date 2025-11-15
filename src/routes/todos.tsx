@@ -8,6 +8,7 @@ import { TodoSkeleton } from "@/components/todos/todo-skeleton"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { db } from "@/database/db"
+import { authClient } from "@/lib/auth-client"
 import { handleAction } from "@/lib/form-helpers"
 
 export const Route = createFileRoute("/todos")({
@@ -16,14 +17,24 @@ export const Route = createFileRoute("/todos")({
 
 function TodosPage() {
   const { user } = useAuthenticate()
+  const {
+    data: activeOrganization,
+    isPending: organizationPending,
+    isRefetching: organizationRefetching
+  } = authClient.useActiveOrganization()
   const [q, setQ] = useState("")
 
   const { data, isLoading } = db.useQuery(
-    user
+    user && !organizationPending && !organizationRefetching
       ? {
           todos: {
             $: {
-              where: { userId: user.id, task: { $ilike: `%${q}%` } },
+              where: {
+                ...(activeOrganization
+                  ? { organizationId: activeOrganization.id }
+                  : { userId: user.id, organizationId: { $isNull: true } }),
+                task: { $ilike: `%${q}%` }
+              },
               order: { serverCreatedAt: "desc" }
             },
             user: {}
@@ -42,11 +53,16 @@ function TodosPage() {
         .create({
           task: task,
           userId: user.id,
+          organizationId: activeOrganization?.id,
           isComplete: false,
           createdAt: new Date(),
           updatedAt: new Date()
         })
-        .link({ user: user.id })
+        .link(
+          activeOrganization
+            ? { organization: activeOrganization.id, user: user.id }
+            : { user: user.id }
+        )
     )
   }
 

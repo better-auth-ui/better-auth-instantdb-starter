@@ -1,4 +1,8 @@
-import { GitHubIcon, UserButton } from "@daveyplate/better-auth-ui"
+import {
+  GitHubIcon,
+  OrganizationSwitcher,
+  UserButton
+} from "@daveyplate/better-auth-ui"
 import { Link } from "@tanstack/react-router"
 
 import { ModeToggle } from "./mode-toggle"
@@ -35,6 +39,8 @@ export function Header() {
         <Link to="/todos" className="font-medium text-sm hover:underline">
           Todos
         </Link>
+
+        <OrganizationSwitcher size="sm" variant="secondary" />
       </div>
 
       <div className="flex items-center gap-2">
