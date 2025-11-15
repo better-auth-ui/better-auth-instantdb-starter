@@ -19,6 +19,7 @@ const _schema = i.schema({
     })
   },
   links: {
+    ...authSchema.links,
     $usersLinkedPrimaryUser: {
       forward: {
         on: "$users",

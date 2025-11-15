@@ -21,7 +21,8 @@ export const authSchema = i.schema({
       updatedAt: i.date(),
       ipAddress: i.string().optional(),
       userAgent: i.string().optional(),
-      userId: i.string()
+      userId: i.string(),
+      activeOrganizationId: i.string().optional()
     }),
     accounts: i.entity({
       accountId: i.string(),
@@ -43,6 +44,107 @@ export const authSchema = i.schema({
       expiresAt: i.date(),
       createdAt: i.date(),
       updatedAt: i.date()
+    }),
+    organizations: i.entity({
+      name: i.string().indexed(),
+      slug: i.string().unique().indexed(),
+      logo: i.string().optional(),
+      createdAt: i.date(),
+      metadata: i.string().optional()
+    }),
+    members: i.entity({
+      organizationId: i.string(),
+      userId: i.string(),
+      role: i.string().indexed(),
+      createdAt: i.date()
+    }),
+    invitations: i.entity({
+      organizationId: i.string(),
+      email: i.string().indexed(),
+      role: i.string().optional().indexed(),
+      status: i.string().indexed(),
+      expiresAt: i.date(),
+      inviterId: i.string()
     })
+  },
+  links: {
+    sessionsUser: {
+      forward: {
+        on: "sessions",
+        has: "one",
+        label: "user",
+        onDelete: "cascade"
+      },
+      reverse: {
+        on: "$users",
+        has: "many",
+        label: "sessions"
+      }
+    },
+    accountsUser: {
+      forward: {
+        on: "accounts",
+        has: "one",
+        label: "user",
+        onDelete: "cascade"
+      },
+      reverse: {
+        on: "$users",
+        has: "many",
+        label: "accounts"
+      }
+    },
+    membersOrganization: {
+      forward: {
+        on: "members",
+        has: "one",
+        label: "organization",
+        onDelete: "cascade"
+      },
+      reverse: {
+        on: "organizations",
+        has: "many",
+        label: "members"
+      }
+    },
+    membersUser: {
+      forward: {
+        on: "members",
+        has: "one",
+        label: "user",
+        onDelete: "cascade"
+      },
+      reverse: {
+        on: "$users",
+        has: "many",
+        label: "members"
+      }
+    },
+    invitationsOrganization: {
+      forward: {
+        on: "invitations",
+        has: "one",
+        label: "organization",
+        onDelete: "cascade"
+      },
+      reverse: {
+        on: "organizations",
+        has: "many",
+        label: "invitations"
+      }
+    },
+    invitationsUser: {
+      forward: {
+        on: "invitations",
+        has: "one",
+        label: "inviter",
+        onDelete: "cascade"
+      },
+      reverse: {
+        on: "$users",
+        has: "many",
+        label: "invitations"
+      }
+    }
   }
 })
