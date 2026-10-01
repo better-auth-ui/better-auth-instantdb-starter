@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "cf dev",
     "build": "cf build",
-    "auth-schema": "npx @better-auth/cli generate",
+    "auth-schema": "bunx @better-auth/cli generate",
     "deploy": "cf deploy",
     "preview": "cf dev --mode production",
     "cf-typegen": "cf workers types",
-    "typecheck": "pnpm run cf-typegen && tsc --noEmit"
+    "typecheck": "bun run cf-typegen && tsc --noEmit"
   },
   "keywords": [
     "better-auth",
@@ -62,5 +62,5 @@
     "tailwindcss-safe-area": "^1.1.0",
     "uuid": "^13.0.0"
   },
-  "packageManager": "pnpm@10.22.0"
+  "packageManager": "bun@1.4.0"
 }
