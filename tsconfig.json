@@ -8,6 +8,8 @@
     "strictNullChecks": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
-  }
+    },
+    "allowImportingTsExtensions": true
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".cloudflare/types/index.d.ts"]
 }

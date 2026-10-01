@@ -1,6 +1,5 @@
 node_modules
 package-lock.json
-pnpm-lock.yaml
 yarn.lock
 
 .DS_Store
@@ -21,3 +20,6 @@ yarn.lock
 .tanstack
 /dist/
 .wrangler
+
+# Cloudflare CLI build output, generated types, and local state
+.cloudflare/
