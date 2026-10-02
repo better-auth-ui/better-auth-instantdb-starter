@@ -6,6 +6,9 @@ export default defineConfig({
     compatibilityFlags: ["nodejs_compat"],
     entrypoint: "@tanstack/react-start/server-entry",
     observability: {
+      issues: {
+        enabled: true
+      },
       enabled: true
     }
   }
